@@ -19,8 +19,21 @@ class MoviesController < ApplicationController
       if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
         session[:sort] = sort
         session[:ratings] = @ratings_to_show
+        @checks = session[:ratings]
       end
       @movies = Movie.where(rating: @ratings_to_show.keys).order(sort)
+      
+      @titlecolor = "hilite"
+      @datecolor = "hilite"
+
+      if sort == 'release_date'
+        @titlecolor = "hilite"
+        @datecolor = "hilite bg-warning"
+      else
+        @titlecolor = "hilite bg-warning"
+        @datecolor = "hilite"
+      end
+
     end
   
     def new
